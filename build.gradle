@@ -83,3 +83,13 @@ compileTestKotlin {
 	    javaParameters = true 
 	}
 }
+
+task stage(dependsOn: ['build', 'clean'])
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)
+build.mustRunAfter clean
